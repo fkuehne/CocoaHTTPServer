@@ -83,6 +83,8 @@
 **/
 - (void)connectionDidClose;
 
+- (NSString *)filePath;
+
 @end
 
 

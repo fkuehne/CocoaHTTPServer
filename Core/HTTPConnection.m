@@ -1214,6 +1214,23 @@ static NSMutableArray *recentNonces;
 	}
 	else
 	{
+        /* add the proper MIME type */
+        NSString *mimeType;
+        NSString *pathExtension = [[httpResponse filePath] pathExtension];
+        if ([pathExtension isEqualToString:@"html"] || [pathExtension isEqualToString:@"htm"])
+            mimeType = @"text/html";
+        else if ([pathExtension isEqualToString:@"js"])
+            mimeType = @"text/javascript";
+        else if ([pathExtension isEqualToString:@"css"])
+            mimeType = @"text/css";
+        else if ([pathExtension isEqualToString:@"png"])
+            mimeType = @"image/png";
+        else if ([pathExtension isEqualToString:@"jpg"] || [pathExtension isEqualToString:@"jpeg"])
+            mimeType = @"image/jpeg";
+        else
+            mimeType = @"text/plain";
+        [response setHeaderField:@"Content-Type" value:mimeType];
+
 		// Write the header response
 		NSData *responseData = [self preprocessResponse:response];
 		[asyncSocket writeData:responseData withTimeout:TIMEOUT_WRITE_HEAD tag:HTTP_PARTIAL_RESPONSE_HEADER];
