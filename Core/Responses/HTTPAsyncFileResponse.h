@@ -33,6 +33,7 @@
 	dispatch_source_t readSource;
 	BOOL readSourceSuspended;
 }
+@property (retain, nonatomic) NSString *contentType;
 
 - (id)initWithFilePath:(NSString *)filePath forConnection:(HTTPConnection *)connection;
 - (NSString *)filePath;

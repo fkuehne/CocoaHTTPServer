@@ -18,6 +18,7 @@
 	void *buffer;
 	NSUInteger bufferSize;
 }
+@property (retain, nonatomic) NSString *contentType;
 
 - (id)initWithFilePath:(NSString *)filePath forConnection:(HTTPConnection *)connection;
 - (NSString *)filePath;
