@@ -85,6 +85,8 @@
 
 - (NSString *)filePath;
 
+- (NSString *)contentType;
+
 @end
 
 

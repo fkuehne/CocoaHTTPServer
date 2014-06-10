@@ -1215,7 +1215,7 @@ static NSMutableArray *recentNonces;
 	else
 	{
         /* add the proper MIME type */
-        NSString *mimeType = @"text/plain";
+        NSString *mimeType = @"application/octet-stream";
         if ([httpResponse respondsToSelector:@selector(filePath)]) {
             NSString *pathExtension = [[httpResponse filePath] pathExtension];
             if ([pathExtension isEqualToString:@"html"] || [pathExtension isEqualToString:@"htm"])
@@ -1228,7 +1228,9 @@ static NSMutableArray *recentNonces;
                 mimeType = @"image/png";
             else if ([pathExtension isEqualToString:@"jpg"] || [pathExtension isEqualToString:@"jpeg"])
                 mimeType = @"image/jpeg";
-        }
+        } else if ([httpResponse respondsToSelector:@selector(contentType)])
+            mimeType = [httpResponse contentType];
+
         [response setHeaderField:@"Content-Type" value:mimeType];
 
 		// Write the header response

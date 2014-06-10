@@ -7,6 +7,7 @@
 	NSUInteger offset;
 	NSData *data;
 }
+@property (retain, nonatomic) NSString *contentType;
 
 - (id)initWithData:(NSData *)data;
 
