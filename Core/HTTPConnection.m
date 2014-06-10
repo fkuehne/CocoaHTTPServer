@@ -11,6 +11,7 @@
 #import "HTTPAsyncFileResponse.h"
 #import "WebSocket.h"
 #import "HTTPLogging.h"
+#import <MobileCoreServices/MobileCoreServices.h>
 
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -1215,22 +1216,18 @@ static NSMutableArray *recentNonces;
 	else
 	{
         /* add the proper MIME type */
-        NSString *mimeType = @"application/octet-stream";
-        if ([httpResponse respondsToSelector:@selector(filePath)]) {
-            NSString *pathExtension = [[httpResponse filePath] pathExtension];
-            if ([pathExtension isEqualToString:@"html"] || [pathExtension isEqualToString:@"htm"])
-                mimeType = @"text/html";
-            else if ([pathExtension isEqualToString:@"js"])
-                mimeType = @"text/javascript";
-            else if ([pathExtension isEqualToString:@"css"])
-                mimeType = @"text/css";
-            else if ([pathExtension isEqualToString:@"png"])
-                mimeType = @"image/png";
-            else if ([pathExtension isEqualToString:@"jpg"] || [pathExtension isEqualToString:@"jpeg"])
-                mimeType = @"image/jpeg";
-        } else if ([httpResponse respondsToSelector:@selector(contentType)])
+        NSString *mimeType;
+        NSString *extension = request.url.pathExtension;
+        if ([httpResponse respondsToSelector:@selector(contentType)])
             mimeType = [httpResponse contentType];
 
+        if (!mimeType)
+            mimeType = [self fileMIMEType:extension];
+
+        if (!mimeType) {
+            if ([extension isEqualToString:@"css"])
+                mimeType = @"text/css";
+        }
         [response setHeaderField:@"Content-Type" value:mimeType];
 
 		// Write the header response
@@ -2670,6 +2667,18 @@ static NSMutableArray *recentNonces;
 	// Post notification of dead connection
 	// This will allow our server to release us from its array of connections
 	[[NSNotificationCenter defaultCenter] postNotificationName:HTTPConnectionDidDieNotification object:self];
+}
+
+#pragma mark - helpers
+
+- (NSString *)fileMIMEType:(NSString *)extension
+{
+    CFStringRef UTI = UTTypeCreatePreferredIdentifierForTag(kUTTagClassFilenameExtension,
+                                                            (__bridge CFStringRef)extension,
+                                                            NULL);
+    CFStringRef MIMEType = UTTypeCopyPreferredTagWithClass (UTI, kUTTagClassMIMEType);
+    CFRelease(UTI);
+    return CFBridgingRelease(MIMEType);
 }
 
 @end
