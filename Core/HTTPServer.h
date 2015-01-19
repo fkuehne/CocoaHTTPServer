@@ -90,6 +90,12 @@
 - (void)setInterface:(NSString *)value;
 
 /**
+ * IPv6 support
+**/
+@property (assign) BOOL IPv4Enabled;
+@property (assign) BOOL IPv6Enabled;
+
+/**
  * The port number to run the HTTP server on.
  * 
  * The default port number is zero, meaning the server will automatically use any available port.
