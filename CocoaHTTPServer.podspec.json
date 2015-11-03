@@ -8,16 +8,23 @@
     "Robbie Hanson": "cocoahttpserver@googlegroups.com"
   },
   "source": {
-    "git": "https://github.com/robbiehanson/CocoaHTTPServer.git",
+    "git": "https://github.com/fkuehne/CocoaHTTPServer.git",
     "tag": "2.3"
   },
-  "source_files": "{Core,Extensions}/**/*.{h,m}",
+  "source_files": "{Core,Extensions,Vendor/CocoaAsyncSocket,Vendor/CocoaLumberjack,Vendor/CocoaLumberjack/Extensions}/**/*.{h,m}",
   "requires_arc": true,
   "platforms": {
     "ios": "5.0",
-    "osx": "10.7"
+    "osx": "10.7",
+    "tvos": "9.0"
   },
   "ios": {
+    "frameworks": [
+      "CFNetwork",
+      "Security"
+    ]
+  },
+  "tvos": {
     "frameworks": [
       "CFNetwork",
       "Security"
@@ -32,13 +39,5 @@
   "libraries": "xml2",
   "xcconfig": {
     "HEADER_SEARCH_PATHS": "\"$(SDKROOT)/usr/include/libxml2\""
-  },
-  "dependencies": {
-    "CocoaAsyncSocket": [
-
-    ],
-    "CocoaLumberjack": [
-
-    ]
   }
 }

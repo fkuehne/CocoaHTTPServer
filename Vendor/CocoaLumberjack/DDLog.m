@@ -126,7 +126,8 @@ static unsigned int numProcessors;
 		dispatch_queue_set_specific(loggingQueue, GlobalLoggingQueueIdentityKey, nonNullValue, NULL);
 		
 		queueSemaphore = dispatch_semaphore_create(LOG_MAX_QUEUE_SIZE);
-		
+
+#if TARGET_OS_IOS
 		// Figure out how many processors are available.
 		// This may be used later for an optimization on uniprocessor machines.
 		
@@ -138,9 +139,12 @@ static unsigned int numProcessors;
 		
 		unsigned int result = (unsigned int)(hostInfo.max_cpus);
 		unsigned int one    = (unsigned int)(1);
-		
+
 		numProcessors = MAX(result, one);
-		
+#else
+        numProcessors = 2;
+#endif
+
 		NSLogDebug(@"DDLog: numProcessors = %u", numProcessors);
 			
 		
