@@ -3,6 +3,12 @@ This is a fork for use within VLC for iOS, since the original project is no long
 Patches from third parties will be happily merged!
 
 ------
+# CocoaHTTPServer
+
+[![Build Status](https://travis-ci.org/robbiehanson/CocoaHTTPServer.svg)](https://travis-ci.org/robbiehanson/CocoaHTTPServer)
+ [![Version](http://img.shields.io/cocoapods/v/CocoaHTTPServer.svg?style=flat)](http://cocoapods.org/?q=CocoaHTTPServer)
+ [![Platform](http://img.shields.io/cocoapods/p/CocoaHTTPServer.svg?style=flat)]()
+ [![License](http://img.shields.io/cocoapods/l/CocoaHTTPServer.svg?style=flat)](https://github.com/robbiehanson/CocoaHTTPServer/blob/master/LICENSE)
 
 CocoaHTTPServer is a small, lightweight, embeddable HTTP server for Mac OS X or iOS applications.
 
