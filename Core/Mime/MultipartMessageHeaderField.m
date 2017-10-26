@@ -203,6 +203,9 @@ NSString* extractParamValue(const char* bytes, NSUInteger length, NSStringEncodi
 	NSRange range= [value rangeOfString:@"\\"];
 	while ( range.length ) {
 		[value deleteCharactersInRange:range];
+		if (value.length < 2) {
+			break;
+		}
 		range.location ++;
 		range = [value rangeOfString:@"\\" options:NSLiteralSearch range: range];
 	}
